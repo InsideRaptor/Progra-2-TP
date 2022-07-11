@@ -12,8 +12,6 @@ public class EjecutarBanco {
 		system.Inicializar(6);
 		DiccionarioSimpleTDA prioridades = new Diccionario();
 		prioridades.InicializarDiccionario();
-		PuestoCajaPrioridad puestoPrioridad = new PuestoCajaPrioridad();
-		PuestoCaja puestoCaja = new PuestoCaja();
 
 		system.Acolar("C", 12);
 		system.Acolar("P", 7);
