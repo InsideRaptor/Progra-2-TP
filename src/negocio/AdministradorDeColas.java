@@ -120,7 +120,7 @@ public class AdministradorDeColas implements AdministradorDeColasTDA {
 
 	@Override
 	public void Desacolar() {
-		int menor = 999;
+		int menor = 9999;
 		int id = 0;
 		boolean puestoPrioritario = true;
 		for (PuestoCaja ignored : puestos) {
@@ -160,8 +160,8 @@ public class AdministradorDeColas implements AdministradorDeColasTDA {
 	@Override
 	public int Primero() {
 		int id = 0;
-		int menor = 1440;
-		for(int i = 0;i<puestos.size();i++) {
+		int menor = 9999;
+		for(int i = 0;i < puestos.size(); i++) {
 			if(puestos.get(i).PrimerDemora() < menor) {
 				id = puestos.get(i).Primero();
 				menor = puestos.get(i).PrimerDemora();
