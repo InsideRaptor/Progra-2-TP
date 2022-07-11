@@ -6,14 +6,14 @@ import interfaces.DiccionarioSimpleTDA;
 import utils.Diccionario;
 
 public class AdministradorDeColas implements AdministradorDeColasTDA {
-	private static ArrayList<PuestoCaja> puestos = new ArrayList();
-	private static ArrayList<PuestoCajaPrioridad> puestosPrioritarios = new ArrayList();
-	private DiccionarioSimpleTDA servicios = new Diccionario();
+	private static final ArrayList<PuestoCaja> puestos = new ArrayList<>();
+	private static final ArrayList<PuestoCajaPrioridad> puestosPrioritarios = new ArrayList<>();
+	private final DiccionarioSimpleTDA nomenclatura = new Diccionario();
 	private int identificadorCliente = 1;
 
 	private void Timer(String sout) {
 		try {
-			Thread.sleep(350);
+			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
@@ -21,14 +21,14 @@ public class AdministradorDeColas implements AdministradorDeColasTDA {
 	}
 
 	private void GenerarNomenclatura() {
-		servicios.InicializarDiccionario();
-		servicios.Agregar("J", 30);
-		servicios.Agregar("P", 10);
-		servicios.Agregar("C", 40);
+		nomenclatura.InicializarDiccionario();
+		nomenclatura.Agregar("J", 30);
+		nomenclatura.Agregar("P", 10);
+		nomenclatura.Agregar("C", 40);
 		//Servicios
-		servicios.Agregar("PF", 10);
-		servicios.Agregar("CH", 40);
-		servicios.Agregar("CG", 15);
+		nomenclatura.Agregar("PF", 10);
+		nomenclatura.Agregar("CH", 40);
+		nomenclatura.Agregar("CG", 15);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class AdministradorDeColas implements AdministradorDeColasTDA {
 
 	@Override
 	public void Acolar(String nombreFila, int cantidad) {
-		int demoraElemento = servicios.Recuperar(nombreFila);
+		int demoraElemento = nomenclatura.Recuperar(nombreFila);
 		if(nombreFila.equals("PF") || nombreFila.equals("CG") || nombreFila.equals("CH")) {
 			for(int i = 0;i<cantidad;i++) {
 				if(!puestosPrioritarios.get(0).maximo()) {
@@ -101,13 +101,13 @@ public class AdministradorDeColas implements AdministradorDeColasTDA {
 				}
 			}
 		} else {
-			for(int j = 0;j<puestos.size();j++) {				
-				if(puestos.get(j).getServicio().equals(nombreFila)) {						
-					for(int q = 0;q<cantidad;q++) {
-						if(!puestos.get(j).maximo()) {
-							String strOut = String.format("\nEl turno %d se ha acolado en el puesto %s con una demora de: %d minutos", identificadorCliente, puestos.get(j).getServicio(), demoraElemento);
+			for (PuestoCaja puesto : puestos) {
+				if (puesto.getServicio().equals(nombreFila)) {
+					for (int q = 0; q < cantidad; q++) {
+						if (!puesto.maximo()) {
+							String strOut = String.format("\nEl turno %d se ha acolado en el puesto %s con una demora de: %d minutos", identificadorCliente, puesto.getServicio(), demoraElemento);
 							Timer(strOut);
-							puestos.get(j).Acolar(identificadorCliente, demoraElemento);
+							puesto.Acolar(identificadorCliente, demoraElemento);
 							identificadorCliente++;
 						} else {
 							AcolarMaximo(demoraElemento);
@@ -123,15 +123,13 @@ public class AdministradorDeColas implements AdministradorDeColasTDA {
 		int menor = 999;
 		int id = 0;
 		boolean puestoPrioritario = true;
-		for(int i = 0; i < puestos.size(); i++) {
-			if(puestos.get(i).Primero() < menor) {
-				menor = puestos.get(i).PrimerDemora();
-				id = i;
+		for (PuestoCaja ignored : puestos) {
+			if(puestos.get(id).Primero() < menor) {
+				menor = puestos.get(id).PrimerDemora();
 				puestoPrioritario = false;
 			}
-			if(puestosPrioritarios.get(i).Primero() < menor){
-				menor = puestosPrioritarios.get(i).getPrioridades(0);
-				id = i;
+			if(puestosPrioritarios.get(id).Primero() < menor){
+				menor = puestosPrioritarios.get(id).getPrioridades(0);
 			}
 		}
 		if(puestoPrioritario) {
@@ -193,16 +191,16 @@ public class AdministradorDeColas implements AdministradorDeColasTDA {
 
 	@Override
 	public void Elementos() {
-		for(int i = 0; i<puestos.size();i++){
+		for(int i = 0; i < puestos.size(); i++){
 			String strOutServ = String.format("\nEl puesto %s tiene una demora total de %d minutos. \nTurnos en espera: ", puestos.get(i).getServicio(), puestos.get(i).getDemoraTotal());
 			Timer(strOutServ);
-			for(int j = 0; j<puestos.get(i).longitud();j++) {
+			for(int j = 0; j < puestos.get(i).longitud(); j++) {
 				String strOut = String.format("\nEl turno %d sera atendido en %d minutos, en la posicion %d", puestos.get(i).elemento(j), puestos.get(i).demoraParcial(j), j);
 				Timer(strOut);
 			}
 			String strOutServ2 = String.format("\nEl puesto %s tiene una demora total de %d minutos. \nTurnos en espera: ", puestosPrioritarios.get(i).getServicio(), puestosPrioritarios.get(i).getDemoraTotal());
 			Timer(strOutServ2);
-			for(int q = 0; q<puestosPrioritarios.get(i).getIndice();q++) {
+			for(int q = 0; q < puestosPrioritarios.get(i).getIndice(); q++) {
 				puestosPrioritarios.get(i).setDemorasParciales();
 				String strOut2 = String.format("\nEl turno %d sera atendido en %d minutos en la posicion %d", puestos.get(i).elemento(q), puestos.get(i).demoraParcial(q), q);
 				Timer(strOut2);
