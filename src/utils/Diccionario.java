@@ -35,7 +35,7 @@ public class Diccionario implements DiccionarioSimpleTDA {
 		}
 		return aux ;
 	}
-	
+
 	@Override
 	public void Eliminar( String clave) {
 		if ( origen!= null ) {
@@ -59,8 +59,7 @@ public class Diccionario implements DiccionarioSimpleTDA {
 		NodoClave n = Clave2NodoClave( clave) ;
 		return n.valor;
 	}
-	
-	@Override
+
 	public ConjuntoTDA Claves() {
 		ConjuntoTDA c = new Conjunto();		
 		c.InicializarConjunto () ;

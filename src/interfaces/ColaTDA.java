@@ -10,10 +10,7 @@ public interface ColaTDA {
 	
 	//La estructura debe estar inicializada antes de efectuar esta operacion y no vacia
 	public void Desacolar() ;
-	
-	//La estructura debe estar inicializada antes de efectuar esta operacion
-	public boolean ColaVacia ();
-	
+
 	//La estructura debe estar inicializada antes de efectuar esta operacion y no vacia
 	public int Primero();
 	

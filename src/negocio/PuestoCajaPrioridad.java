@@ -4,38 +4,34 @@ import interfaces.ColaPrioridadTDA;
 
 public class PuestoCajaPrioridad implements ColaPrioridadTDA {
 	private String servicio;
-	private int[] elementos;
-	private int[] demorasParciales;
-	private int[] prioridades;
+	private int[] elemento;
+	private int[] demoraParcial;
+	private int[] prioridad;
 	private int demoraTotal;
 	private int indice;
-	
+
 	public void setDemorasParciales() {
 		int demoraParcial = 0;
-		for(int i = 0; i<demorasParciales.length;i++) {	
-			demorasParciales[i] = demoraParcial;
-			demoraParcial += prioridades[i];
+		for (int i = 0; i < this.demoraParcial.length; i++) {
+			this.demoraParcial[i] = demoraParcial;
+			demoraParcial += prioridad[i];
 		}
 	}
 
 	public void setDemoraTotal(int demora) {
 		this.demoraTotal -= demora;
 	}
-	
+
 	public int getPrioridades(int q) {
-		return prioridades[q];
-	}
-	
-	public boolean maximo() {	
-		return indice == elementos.length;
+		return prioridad[q];
 	}
 
-	public int primerDemora() {
-		return prioridades[0];
+	public boolean maximo() {
+		return indice == elemento.length;
 	}
 
 	public int getIndice() {
-		return elementos.length;
+		return elemento.length;
 	}
 
 	public int getDemoraTotal() {
@@ -50,34 +46,26 @@ public class PuestoCajaPrioridad implements ColaPrioridadTDA {
 		this.servicio = servicio;
 	}
 
-	public int demoraParcial(int j) {
-		return demorasParciales[j];
-	}
-
-	public int[] getElementos() {
-		return elementos;
-	}
-
 	@Override
 	public void InicializarCola() {
 		indice = 0;
-		elementos = new int[7];
-		demorasParciales = new int[7];
-		prioridades = new int[7];
+		elemento = new int[7];
+		demoraParcial = new int[7];
+		prioridad = new int[7];
 		demoraTotal = 0;
 	}
 
-	@Override 
+	@Override
 	public void acolarPrioridad(int valor, int prioridad) {
 		int j = indice;
-		for(; j>0 && prioridades[j-1]>=prioridad;j--) {
-			elementos[j] = elementos[j-1];		
-			prioridades[j] = prioridades[j-1];
+		for (; j > 0 && this.prioridad[j - 1] >= prioridad; j--) {
+			elemento[j] = elemento[j - 1];
+			this.prioridad[j] = this.prioridad[j - 1];
 		}
-		elementos[j] = valor;
-		prioridades[j] = prioridad;		
+		elemento[j] = valor;
+		this.prioridad[j] = prioridad;
 		demoraTotal += prioridad;
-		indice++;	
+		indice++;
 	}
 
 	@Override
@@ -87,21 +75,11 @@ public class PuestoCajaPrioridad implements ColaPrioridadTDA {
 
 	@Override
 	public int Primero() {
-		return elementos[indice-1];
-	}
-
-	@Override
-	public boolean ColaVacia() {
-		return (indice ==0);
+		return elemento[indice - 1];
 	}
 
 	@Override
 	public int Prioridad() {
-		return elementos[indice-1];
-	}
-
-	@Override
-	public int elemento(int i) {
-		return elementos[i];
+		return elemento[indice - 1];
 	}
 }

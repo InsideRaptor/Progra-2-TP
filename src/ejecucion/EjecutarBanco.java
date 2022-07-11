@@ -2,31 +2,30 @@ package ejecucion;
 
 import interfaces.DiccionarioSimpleTDA;
 import negocio.AdministradorDeColas;
+import negocio.PuestoCaja;
+import negocio.PuestoCajaPrioridad;
 import utils.Diccionario;
 
 public class EjecutarBanco {
 	public static void main(String[] args) {
-		AdministradorDeColas admin = new AdministradorDeColas();
-		admin.Inicializar(6);
-		
-		DiccionarioSimpleTDA serviciosFilas = new Diccionario();
-		serviciosFilas.InicializarDiccionario();
+		AdministradorDeColas system = new AdministradorDeColas();
+		system.Inicializar(6);
+		DiccionarioSimpleTDA prioridades = new Diccionario();
+		prioridades.InicializarDiccionario();
+		PuestoCajaPrioridad puestoPrioridad = new PuestoCajaPrioridad();
+		PuestoCaja puestoCaja = new PuestoCaja();
 
-		admin.Acolar("C", 10);
-		admin.Acolar("P", 10);
-		admin.Acolar("J", 10);
-		admin.Acolar("PF", 4);	
-		admin.Acolar("CH", 4);	
-		admin.Acolar("CG", 4);
-		
-		admin.Desacolar();		
-		admin.Programacion("J");
-		admin.Programacion("General 2");
-		admin.CantidadDeColas();	
-		admin.Primero();	
-		admin.Elementos();
-		admin.TiempoEstimado();	
-		admin.PuestoDelProximoElemento();
-		admin.PuestoDelElemento(2);
+		system.Acolar("C", 12);
+		system.Acolar("P", 7);
+		system.Acolar("J", 11);
+		system.Acolar("PF", 4);
+		system.Acolar("CH", 4);
+		system.Acolar("CG", 4);
+
+		system.CantidadDeColas();
+		system.Primero();
+		system.Elementos();
+		system.TiempoEstimado();
+		system.Desacolar();
 	}
 }

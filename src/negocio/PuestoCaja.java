@@ -68,11 +68,6 @@ public class PuestoCaja implements ColaTDA {
 	}
 
 	@Override
-	public boolean ColaVacia() {
-		return cantidad == 0;
-	}
-
-	@Override
 	public int Primero() {
 		return valor[0];
 	}

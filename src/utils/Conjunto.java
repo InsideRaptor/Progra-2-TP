@@ -13,31 +13,10 @@ public class Conjunto implements ConjuntoTDA {
 	}
 
 	@Override
-	public boolean ConjuntoVacio() {
-		return cant == 0;
-	}
-
-	@Override
 	public void Agregar(String x) {
 		if (!this.Pertenece(x)) {
 			array[cant] = x;
 			cant ++;
-		}
-	}
-
-	@Override
-	public String Elegir() {
-		return array[cant- 1];
-	}
-
-	@Override
-	public void Sacar(String x) {
-		int i = 0;
-		while (i < cant && array[i ]!= x)
-			i ++;
-		if (i < cant ){
-			array[i] = array[ cant -1];
-			cant --;
 		}
 	}
 
