@@ -2,8 +2,6 @@ package ejecucion;
 
 import interfaces.DiccionarioSimpleTDA;
 import negocio.AdministradorDeColas;
-import negocio.PuestoCaja;
-import negocio.PuestoCajaPrioridad;
 import utils.Diccionario;
 
 public class EjecutarBanco {
